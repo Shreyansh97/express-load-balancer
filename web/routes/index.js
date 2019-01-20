@@ -9,7 +9,13 @@ const loginCheck = (req,res,next) => {
 const user = require('./user');
 const auth = require('./auth');
 
-// router.use('/user',loginCheck,user);
+/**
+ * Bypassing login check in development mode
+ */
+if(process.env.MODE == 'DEV')
+  router.use('/user',user);
+else
+  router.use('/user',loginCheck,user);
 router.use('/',auth);
 
 module.exports = router;

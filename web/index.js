@@ -7,6 +7,7 @@ const path = require('path');
 
 const routes = require('./routes');
 const response = require('./response-middleware');
+const models = require('./models');
 
 const app = express();
 
@@ -39,3 +40,13 @@ app.listen(PORT,err=>{
     return console.error(err);
   console.log('Listening on port '+PORT);
 });
+
+models.sequelize.sync().then(
+  ()=>{
+    console.log('Models synced');
+  },
+  err=>{
+    console.error('Models not synced');
+  }
+);
+  
