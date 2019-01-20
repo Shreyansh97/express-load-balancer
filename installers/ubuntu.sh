@@ -26,6 +26,9 @@ EOL
 # installing curl
 apt install curl
 
+# adding nginx ppa
+add-apt-repository ppa:nginx/stable
+
 # adding nodejs 10.x to apt and updating apt
 curl -sL https://deb.nodesource.com/setup_10.x | -E bash -
 
