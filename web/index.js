@@ -31,6 +31,8 @@ app.use(response);
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','hbs');
 
+require('./hbshelpers');
+
 app.use('/',routes);
 
 const PORT = process.env.PORT || 3000;
