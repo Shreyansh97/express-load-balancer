@@ -1,0 +1,29 @@
+{
+  "name": "express-load-balancer",
+  "version": "1.0.0",
+  "description": "A simple gui wrapper for the nginx load balancer written in nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shreyansh97/express-load-balancer/"
+  },
+  "keywords": [
+    "Express",
+    "Nginx",
+    "Load",
+    "Balancer"
+  ],
+  "author": "Shreyansh Murarka",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "hbs": "^4.0.1",
+    "joi": "^14.3.1"
+  }
+}
