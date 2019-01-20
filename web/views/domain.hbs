@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Express Load Balancer</title>
+</head>
+<body>
+  <center>
+    <h1>New Server</h1>
+    <form action="javascript:newServer({{id}})" id="server-form">
+      <input type="hidden" name="domainId" value="{{id}}">
+      <label for="ip">IP/hostname(with port)</label>
+      <input type="text" name="ip" required><br><br>
+      <label for="weight">Weight</label>
+      <input type="number" name="weight" value="1" required><br><br>
+      <label for="max_conns">Maximum No of Connections</label>
+      <input type="number" name="max_conns" value="0" required><br><br>
+      <label for="max_fails">Maximum No of Failed Attempts</label>
+      <input type="number" name="max_fails" value="1" required><br><br>
+      <label for="fail_timeout">Failure Timeout(s)</label>
+      <input type="number" name="fail_timeout" value="10" required><br><br>
+      <label for="backup">Backup Server?</label>
+      <input type="radio" name="backup" value="true">Yes
+      <input type="radio" name="backup" value="false" checked>No <br><br>
+      <label for="down">Down Server?</label>
+      <input type="radio" name="down" value="true">Yes
+      <input type="radio" name="down" value="false" checked>No <br><br>
+      <input type="submit" value="CREATE">
+    </form>
+    <h1>Servers</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>IP</th>
+          <th>Weight</th>
+          <th>Max Conns</th>
+          <th>Max Fails</th>
+          <th>Failure Timeout</th>
+          <th>Backup</th>
+          <th>Down</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each servers}}
+        <tr>
+          <td>{{this.ip}}</td>
+          <td>{{this.Weight}}</td>
+          <td>{{this.max_conns}}</td>
+          <td>{{this.max_fails}}</td>
+          <td>{{this.fail_timeout}}</td>
+          <td>{{binToBool this.backup}}</td>
+          <td>{{binToBool this.down}}</td>
+          <td>
+            <button onclick="javascript:deleteServer({{this.id}});">
+              Delete
+            </button>
+          </td>
+        </tr>  
+      {{/each}}
+      </tbody>
+    </table>
+  </center>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

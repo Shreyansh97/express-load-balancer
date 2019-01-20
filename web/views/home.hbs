@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Express Load Balancer</title>
+</head>
+<body>
+  <center>
+    <h1>New Domain</h1>
+    <form action="javascript:newDomain()" id="domain-form">
+      <label for="name">Domain Name</label>
+      <input type="text" name="name" id="name" required><br><br>
+      <label for="type">Type of Balancing</label>
+      <select name="type" id="type" required>
+        <option value="1">Round Robin</option>
+        <option value="2">Least Connections</option>
+        <option value="3">IP Hash</option>
+      </select><br><br>
+      <label for="protocol">Protocol</label>
+      <select name="protocol" id="protocol" required>
+        <option value="http">HTTP</option>
+        <option value="https">HTTPS</option>
+      </select><br><br>
+      <input type="submit" value="CREATE">
+    </form>
+    <h1>Domains</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Domain Name</th>
+          <th>Type of Load Balancer</th>
+          <th>Protocol</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each domains}}
+        <tr>
+          <td>{{this.name}}</td>
+          <td>{{gettype this.type}}</td>
+          <td>{{this.protocol}}</td>
+          <td>
+            <button onclick="javascript:deleteDomain({{this.id}});">
+              Delete
+            </button>
+            <button onclick="window.location.href='/user/{{this.id}}'">
+              Config
+            </button>
+          </td>
+        </tr>  
+      {{/each}}
+      </tbody>
+    </table>
+  </center>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
