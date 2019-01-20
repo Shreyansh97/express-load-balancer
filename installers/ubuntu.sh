@@ -42,8 +42,9 @@ pwd=`pwd`
 config_dir="$pwd/conf"
 # creating setup configurations
 mkdir $config_dir -p
+chmod 777 $config_dir
 cat > /etc/nginx/conf.d/express-load-balancer.nginx.conf <<EOL
-include $config_dir/*.nginx.conf
+include $config_dir/*.nginx.conf;
 EOL
 
 # enabling pm2 apps to run on startup
