@@ -56,4 +56,11 @@ pm2 start web/index.js --name express-load-balancer
 # auto starting load balancer with computer restart
 pm2 save
 
+user=`who | awk '{print $1;}'` #getting the current username
+
+# allowing nginx commands to run without password
+echo "$user ALL=(ALL) NOPASSWD: /etc/init.d/nginx" | sudo EDITOR='tee -a' visudo
+
+shutdown -r now
+
 exit
