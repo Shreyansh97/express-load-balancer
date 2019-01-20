@@ -17,8 +17,8 @@ fi
 # writing files to node environment variables
 cat > web/.env <<EOL
 PORT=$port
-USER=$user
-PASS=$pass
+USERNAME=$user
+PASSWORD=$pass
 EOL
 
 # installations
