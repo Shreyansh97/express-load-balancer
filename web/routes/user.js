@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const fs = require('fs');
 const path = require('path');
+const execSh = require('exec-sh').promise;
 
 const validator = require('../joivalidator');
 const schemas = require('../schemas/user');
@@ -40,10 +41,14 @@ server {
   }
 }
 `
-    console.log(config);
-    fs.writeFile(path.join(__dirname,'..','..','conf',currDom.protocol+'.'+currDom.name+'.nginx.conf'),config,function(err){
+    fs.writeFile(path.join(__dirname,'..','..','conf',currDom.protocol+'.'+currDom.name+'.nginx.conf'),config,async err => {
       if(err) return reject(err);
-      return resolve();
+      try{
+        await restartNginx();
+        return resolve();
+      } catch(err) {
+        return reject(err);
+      }
     })
     } catch (err) {
       reject(err);
@@ -55,8 +60,13 @@ const deleteConfig = async id =>{
   return new Promise(async(resolve,reject) =>{
     try {
       let currDom = await domain.findOne({ where: { id }});
-      fs.unlink(path.join(__dirname,'..','..','conf',currDom.protocol+'.'+currDom.name+'.nginx.conf'),err=>{
-        resolve();
+      fs.unlink(path.join(__dirname,'..','..','conf',currDom.protocol+'.'+currDom.name+'.nginx.conf'), async err=>{
+        try {
+          await restartNginx();
+          resolve();
+        } catch(err) {
+          reject(err);
+        }
       });
     } catch(err) {
       return reject(err);
@@ -64,10 +74,17 @@ const deleteConfig = async id =>{
   });
 };
 
-const restartNginx = new Promise(async (resolve,reject) => {
-  //figure this part out
-  return resolve();
-});
+const restartNginx = () => 
+  new Promise(async (resolve,reject) => {
+    try{
+      console.log('restarting nginx');
+      await execSh("sudo /etc/init.d/nginx reload");
+      return resolve();
+    } catch (err) {
+      return reject(err);
+    }
+  }
+);
 
 router.post(
   '/addDomain',
@@ -111,6 +128,48 @@ router.post(
     }
   }
 )
+
+router.post(
+  '/deleteServer',
+  validator(schemas.deleteDomain),
+  async (req,res) => {
+    try {
+      await server.destroy({ where: { id: req.body.id } });
+      await writeconfig(req.body.id);
+      return res.sendSuccess();
+    } catch(err) {
+      return res.sendError(err);
+    }
+  }
+);
+
+
+router.get(
+  '/',
+  async (req,res)=>{
+    try {
+      let domains = await domain.findAll();
+      return res.render('home',{domains});
+    } catch(err) {
+      return res.sendError(err);
+    }
+  }
+);
+
+router.get(
+  '/:id/',
+  async (req,res)=>{
+    try {
+      let servers = await server.findAll({ where: { domainId: req.params.id }});
+      return res.render('domain',{
+        servers,
+        id: req.params.id
+      });
+    } catch(err) {
+      return res.sendError(err);
+    }
+  }
+);
 
 
 module.exports = router;
