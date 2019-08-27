@@ -16,3 +16,7 @@ COPY nginx.conf /etc/nginx/conf.d/
 # installing web app dependencies
 WORKDIR /usr/src/web/
 RUN npm install
+
+ENV USERNAME=admin
+ENV PASSWORD=admin
+ENV MODE=prod

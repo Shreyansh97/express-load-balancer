@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -35,7 +33,7 @@ require('./hbshelpers');
 
 app.use('/',routes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = 9582;
 
 app.listen(PORT,err=>{
   if(err)
