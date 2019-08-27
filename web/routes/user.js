@@ -78,7 +78,7 @@ const restartNginx = () =>
   new Promise(async (resolve,reject) => {
     try{
       console.log('restarting nginx');
-      await execSh("sudo /etc/init.d/nginx reload");
+      await execSh("/etc/init.d/nginx reload");
       return resolve();
     } catch (err) {
       return reject(err);
