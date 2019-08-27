@@ -1,0 +1,12 @@
+web:
+  image: shreyansh97/express-load-balancer
+  ports:
+    - 9582:9582
+    - 80:80
+    - 443:443
+  environment:
+    - USERNAME=admin
+    - PASSWORD=admin
+    - MODE=PRODUCTION
+  command: service nginx start && node index.js
+  
