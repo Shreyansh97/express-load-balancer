@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 
 const routes = require('./routes');
@@ -19,6 +20,7 @@ app.use(session({
   }
 }));
 
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname,'public')));
@@ -33,7 +35,7 @@ require('./hbshelpers');
 
 app.use('/',routes);
 
-const PORT = 9582;
+const PORT = process.env.NODE_PORT || 9582;
 
 app.listen(PORT,err=>{
   if(err)
