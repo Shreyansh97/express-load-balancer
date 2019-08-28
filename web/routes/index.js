@@ -12,7 +12,7 @@ const auth = require('./auth');
 /**
  * Bypassing login check in development mode
  */
-if(process.env.MODE === 'DEV')
+if(process.env.NODE_ENV === 'development')
   router.use('/user',user);
 else
   router.use('/user',loginCheck,user);

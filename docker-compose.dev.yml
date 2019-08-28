@@ -1,0 +1,14 @@
+web:
+  build: .
+  volumes:
+    - ./:/usr/src/
+  ports:
+    - 9582:9582
+    - 80:80
+    - 443:443
+  environment:
+    - USERNAME=admin
+    - PASSWORD=admin
+    - NODE_ENV=development
+  command: /bin/bash -c "npm run dev && nginx -g 'daemon off;'"
+  

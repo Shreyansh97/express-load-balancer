@@ -19,8 +19,10 @@ RUN npm install
 
 ENV USERNAME=admin
 ENV PASSWORD=admin
-ENV MODE=prod
+ENV NODE_ENV=production
 
 EXPOSE 9582
 EXPOSE 80
 EXPOSE 443
+
+CMD [ "node", "index.js", "&&", "nginx", "-g", "daemon off;" ]

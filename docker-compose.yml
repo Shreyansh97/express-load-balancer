@@ -1,5 +1,5 @@
 web:
-  image: shreyansh97/express-load-balancer
+  image: shreyansh97/express-load-balancer:latest
   ports:
     - 9582:9582
     - 80:80
@@ -7,6 +7,6 @@ web:
   environment:
     - USERNAME=admin
     - PASSWORD=admin
-    - MODE=PRODUCTION
-  command: service nginx start && node index.js
+    - NODE_ENV=production
+  command: /bin/bash -c "npm run prod && nginx -g 'daemon off;'"
   
